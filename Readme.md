@@ -1,0 +1,165 @@
+
+# System Monitoring Scripts
+
+  
+
+Simple Bash scripts to monitor disk usage and process activity on Linux systems.
+
+  
+
+## 📦 Prerequisites
+
+- Linux-based system (Tested on Amazon Linux 2/Ubuntu)
+
+- Bash shell
+
+- Basic utilities: `df`, `du`, `ps`
+
+  
+
+## 🛠️ Setup
+
+  
+
+1.  **Clone the repository**
+
+```bash
+git  clone  https://github.com/yourusername/monitoring-scripts.git
+
+cd  monitoring-scripts
+```
+
+ 2. **Make scripts executable**
+
+```bash
+chmod +x disk_monitor.sh process_monitor.sh
+```
+
+ 3. ## 🖥️ Basic Usage
+
+**Command:**
+```bash
+./disk_monitor.sh
+```
+**What it does:**
+
+-   Checks overall disk usage
+    
+-   Identifies large directories in `/home`
+    
+-   Generates log in `logs/disk_<timestamp>.log`
+```bash
+===== Disk Usage Report (2025-05-24_17-13-45) =====
+
+Filesystem Size Used Avail Use% Mounted on
+
+tmpfs 1.5G 2.6M 1.5G 1% /run
+
+/dev/nvme0n1p2 233G 88G 133G 40% /
+
+tmpfs 7.5G 37M 7.5G 1% /dev/shm
+
+efivarfs 154K 65K 85K 44% /sys/firmware/efi/efivars
+
+tmpfs 5.0M 12K 5.0M 1% /run/lock
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-journald.service
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-udev-load-credentials.service
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-tmpfiles-setup-dev-early.service
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-sysctl.service
+
+tmpfs 7.5G 8.5M 7.5G 1% /tmp
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-tmpfiles-setup-dev.service
+
+/dev/nvme0n1p1 1.1G 6.2M 1.1G 1% /boot/efi
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-tmpfiles-setup.service
+
+tmpfs 1.0M 0  1.0M 0% /run/credentials/systemd-resolved.service
+
+tmpfs 1.5G 3.7M 1.5G 1% /run/user/1000
+
+  
+
+===== Large Directories =====
+
+  
+
+70G /home/kevin
+```
+### Process Monitoring Script (`process_monitor.sh`)
+
+**Command:**
+```bash
+./process_monitor.sh
+```
+**What it does:**
+
+-   Lists top 10 CPU-intensive processes
+    
+-   Lists top 10 memory-consuming processes
+    
+-   Generates log in `logs/process_<timestamp>.log`
+
+**Example output:**
+
+```bash
+===== Process Report (2025-05-24_17-14-30) =====
+
+USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+
+kevin 76746  300  0.0  11428  4344 pts/0 R+ 17:14  0:00 ps aux --sort=-%cpu
+
+kevin 8801  48.0  2.5  3333816  396436 ? Sl 14:08  89:16 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39410 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {6a674999-8526-4753-9b2d-53127e13a5f2} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 7 tab
+
+kevin 7756  37.8  4.5  12858116  708488 ? Sl 14:08  70:17 /snap/firefox/6103/usr/lib/firefox/firefox
+
+kevin 6965  18.8  2.2  5710616  355660 ? Ssl 14:08  35:00 /usr/bin/gnome-shell
+
+kevin 14036  5.1  5.9  3794524  932508 ? Sl 15:39  4:55 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39753 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {620593b0-c528-461e-88e9-c7e5f56ce513} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 78 tab
+
+kevin 9607  4.3  1.4  2634724  226460 ? Sl 14:09  8:06 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39605 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {b2c315aa-c357-4282-8adb-65fd8d62b071} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 16 tab
+
+kevin 14787  4.1  2.0  1221569312  327040 ? Sl 15:49  3:32 /usr/share/code/code --type=renderer --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1748075851455453 --launch-time-ticks=6097808932 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:623814ef-e7cd-4c63-9537-0c672e9c0d3e
+
+kevin 41441  3.5  1.4  1216431760  235464 ? Sl 16:31  1:30 /usr/share/code/code --type=renderer --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=20 --time-ticks-at-unix-epoch=-1748075851455453 --launch-time-ticks=8655394144 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:bbfdcf73-dcaf-4d25-84d4-c657c114f5cc
+
+kevin 14763  3.2  0.7  34343136  116512 ? Sl 15:49  2:48 /usr/share/code/code --type=gpu-process --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --gpu-preferences=UAAAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAABgAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAEAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA --shared-files --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version
+
+  
+
+===== Memory Usage =====
+
+  
+
+USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+
+kevin 14036  5.1  5.9  3794524  932508 ? Sl 15:39  4:55 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39753 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {620593b0-c528-461e-88e9-c7e5f56ce513} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 78 tab
+
+kevin 7756  37.8  4.5  12858116  708488 ? Sl 14:08  70:17 /snap/firefox/6103/usr/lib/firefox/firefox
+
+kevin 44345  2.2  3.9  1218090376  619504 ? Sl 16:35  0:51 /usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --dns-result-order=ipv4first --inspect-port=0 --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version
+
+kevin 42625  1.9  3.8  1218090316  610200 ? Sl 16:33  0:47 /usr/share/code/code --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --dns-result-order=ipv4first --inspect-port=0 --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version
+
+kevin 44503  2.7  3.1  9726052  498440 ? Sl 16:36  1:04 /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/jre/21.0.7-linux-x86_64.tar/bin/java -jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/server/sonarlint-ls.jar -stdio -analyzers /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonargo.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarjava.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarjavasymbolicexecution.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarjs.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarphp.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarpython.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarhtml.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarxml.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonartext.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonariac.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint-vscode-4.22.0-linux-x64/analyzers/sonarlintomnisharp.jar /home/kevin/.vscode/extensions/sonarsource.sonarlint_ondemand-analyzers/sonar-cfamily-plugin/6.66.0.83483/sonarcfamily.jar
+
+kevin 9153  0.7  2.7  2967444  440148 ? Sl 14:08  1:18 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39491 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {6499b4c1-1d14-4298-b6e6-28c462e7d90e} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 11 tab
+
+kevin 8801  48.0  2.5  3333816  396436 ? Sl 14:08  89:16 /snap/firefox/6103/usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39410 -prefMapHandle 1:269681 -jsInitHandle 2:247720 -parentBuildID 20250502135843 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {6a674999-8526-4753-9b2d-53127e13a5f2} -parentPid 7756 -crashReporter 6 -greomni /snap/firefox/6103/usr/lib/firefox/omni.ja -appomni /snap/firefox/6103/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/6103/usr/lib/firefox/browser 7 tab
+
+kevin 6965  18.8  2.2  5710616  355660 ? Ssl 14:08  35:00 /usr/bin/gnome-shell
+
+kevin 14787  4.1  2.0  1221569312  327040 ? Sl 15:49  3:32 /usr/share/code/code --type=renderer --crashpad-handler-pid=14744 --enable-crash-reporter=86b86e19-299d-41de-953c-8fe51be65bc3,no_channel --user-data-dir=/home/kevin/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1748075851455453 --launch-time-ticks=6097808932 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16163434502216905685,9545395191421136133,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:623814ef-e7cd-4c63-9537-0c672e9c0d3e
+```
+## 📂 File Locations
+
+-   Scripts: Root directory
+    
+-   Logs: `logs/` directory (auto-created on first run)
+    
+-   Archive: Logs are kept indefinitely (manual cleanup required)

@@ -1,0 +1,21 @@
+===== Disk Usage Report (2025-05-24_17-13-45) =====
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           1.5G  2.6M  1.5G   1% /run
+/dev/nvme0n1p2  233G   88G  133G  40% /
+tmpfs           7.5G   37M  7.5G   1% /dev/shm
+efivarfs        154K   65K   85K  44% /sys/firmware/efi/efivars
+tmpfs           5.0M   12K  5.0M   1% /run/lock
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-udev-load-credentials.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup-dev-early.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-sysctl.service
+tmpfs           7.5G  8.5M  7.5G   1% /tmp
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup-dev.service
+/dev/nvme0n1p1  1.1G  6.2M  1.1G   1% /boot/efi
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-tmpfiles-setup.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs           1.5G  3.7M  1.5G   1% /run/user/1000
+
+===== Large Directories =====
+
+70G	/home/kevin
